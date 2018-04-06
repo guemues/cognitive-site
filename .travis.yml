@@ -1,0 +1,15 @@
+language: node_js
+dist: trusty
+node_js:
+  - "6.10.1"
+
+script:
+  - npm run build
+  - mv community0.json dist/community0.json
+deploy:
+  local_dir: dist/
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+      branch: master
