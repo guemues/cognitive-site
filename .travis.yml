@@ -12,6 +12,6 @@ deploy:
   bucket: epfl.shs
   skip_cleanup: true
   region: eu-central-1
-  upload-dir: dist
+  local_dir: dist
   on:
       branch: master
