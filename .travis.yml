@@ -5,11 +5,14 @@ node_js:
 
 script:
   - npm run build
-  - mv community0.json dist/community0.json
 deploy:
-  local_dir: dist/
-  provider: pages
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: shs.epfl
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  acl: public_read
+  region: eu-central-1
+  upload-dir: dist
   on:
       branch: master
