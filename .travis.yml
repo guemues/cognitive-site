@@ -13,5 +13,6 @@ deploy:
   skip_cleanup: true
   region: eu-central-1
   local_dir: dist
+  acl: public_read
   on:
       branch: master
