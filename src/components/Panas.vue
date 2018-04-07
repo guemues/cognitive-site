@@ -1,7 +1,7 @@
 <template>
   <div id="panas">
     <div id="selection" v-if="!submitted">
-      <h1>How are you feeling right now? </h1>
+      <h1>How are you feeling right now?</h1>
 
       <p>Can you please rate your current emotions according to this scale?</p>
       <p>1: Very Slightly or Not at all </p>
@@ -243,9 +243,6 @@
       <!--<p>Active: {{ panas_scale.active }}</p>-->
       <!--<p>Afraid: {{ panas_scale.afraid }}</p>-->
 
-      <ul>
-        <list><router-link to="/question" exact>Next</router-link></list>
-      </ul>
     </div>
   </div>
 </template>
@@ -258,7 +255,6 @@
         picked: 0,
         normal: ['a','b','c','d'],
         panas_scale: {
-          profile_uid:'',
           interested: '',
           distressed: '',
           excited: '',
@@ -288,7 +284,9 @@
     },
     methods: {
       post:function(){
-        this.$http.post('http://jsonplaceholder.typicode.com/posts',{
+        this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/click',{
+          is_before: 'TRUE',
+          profile_uid: this.profile_uid,
           interested: this.panas_scale.interested,
           distressed: this.panas_scale.distressed,
           excited: this.panas_scale.excited,
@@ -308,10 +306,8 @@
           jittery: this.panas_scale.jittery,
           active: this.panas_scale.active,
           afraid: this.panas_scale.afraid
-
-
         }).then(function(data){
-          console.log(data);
+          this.$router.push({ path: '/question' });
           this.submitted= true;
         });
 
@@ -327,7 +323,7 @@
   }
   #panas{
     margin: 20px auto;
-    max-width: 500px;
+    max-width: 600px;
   }
   label{
     display: block;
@@ -361,9 +357,6 @@
 
 </style>
 <style scoped>
-
-
-
   ul{
     list-style-type: none;
     text-align: center;

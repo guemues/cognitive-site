@@ -1,7 +1,6 @@
 <template>
   <div id="questions">
-    <h2 id="timer_style" v-if="userReady && !timeUp">
-    </h2>
+    <h2 id="timer_style" v-if="userReady && !timeUp"></h2>
     <div id="instructions" v-if="!userReady">
       <h1>Instructions for art evaluation</h1>
       <p>Thank you for taking part in our survey. The session will take place as follows:</p>
@@ -16,22 +15,45 @@
         Please try to answer the whole questions in one sitting.
       </p>
       <p>When ready click the next button</p>
-      <button v-on:click.prevent="ready">Next</button>
+      <button class="btn btn-default" v-on:click.prevent="ready">Next</button>
     </div>
     <div id="one-question" v-if="userReady && !timeUp">
-      <h2>{{questions[currentIndex%5]}}</h2>
-      <div class="gallery" v-for="place in places" >
-        <a target="_blank" v-on:click="post(place)">
-          <img style="height: 300px" :src="images[place]"  width="900" height="600">
-        </a>
-        <div class="desc">{{place + 1}}</div>
+      <h2 class="text-center">{{questions[currentIndex%5]}}</h2>
+
+      <div class="col-lg-6 box">
+        <div class="gallery"  >
+          <a target="_blank" v-on:click="post(0)">
+            <img class="img-responsive" :src="images[0]" >
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 box">
+        <div class="gallery"  >
+          <a target="_blank" v-on:click="post(1)">
+            <img class="img-responsive" :src="images[1]">
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 box">
+        <div class="gallery"  >
+          <a target="_blank" v-on:click="post(2)">
+            <img class="img-responsive":src="images[2]" >
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 box">
+        <div class="gallery"  >
+          <a target="_blank" v-on:click="post(3)">
+            <img class="img-responsive":src="images[3]">
+          </a>
+        </div>
       </div>
     </div>
     <div id="endQuestions" v-if="userReady && timeUp">
       <h3>Final Step</h3>
       <p>Now please complete the PANAS Test one more time.</p>
       <ul>
-        <list><router-link to="/panasfinal" exact id="button">Next</router-link></list>
+        <router-link to="/panasfinal" exact id="button"><button class="btn btn-default">Next</button></router-link>
       </ul>
     </div>
   </div>
@@ -39,9 +61,92 @@
 </template>
 
 <script>
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const all_images = shuffle(['3-5.png',
+    '3-6.png',
+    '3-11.png',
+    '4-44.png',
+    '4-48.png',
+    '5-4.png',
+    '5-6.png',
+    '5-32.png',
+    '5-40.png',
+    '6-26.png',
+    '7-24.png',
+    '11-6.png',
+    '14-4.png',
+    '14-6.png',
+    '14-7.png',
+    '16-2.png',
+    '16-4.png',
+    '17-4.png',
+    '17-7.png',
+    '18-2.png',
+    '18-4.png',
+    '18-6.png',
+    '18-7.png',
+    '19-4.png',
+    '21-43.png',
+    '21-47.png',
+    '22-24.png',
+    '22-29.png',
+    '22-45.png',
+    '23-26.png',
+    '23-42.png',
+    '24-22.png',
+    '24-49.png',
+    '25-32.png',
+    '26-29.png',
+    '26-42.png',
+    '26-46.png',
+    '27-25.png',
+    '27-28.png',
+    '30-24.png',
+    '30-41.png',
+    '31-21.png',
+    '31-22.png',
+    '31-23.png',
+    '31-24.png',
+    '32-27.png',
+    '32-42.png',
+    '32-44.png',
+    '32-46.png',
+    '34-1.png',
+    '38-39.png',
+    '38-40.png',
+    '38-44.png',
+    '38-48.png',
+    '40-6.png',
+    '40-23.png',
+    '40-41.png',
+    '40-45.png',
+    '41-24.png',
+    '42-11.png',
+    '42-49.png',
+    '44-23.png',
+    '44-43.png',
+    '45-43.png',
+    '46-45.png',
+    '46-48.png',
+    '48-21.png',
+    '48-47.png',
+    '49-40.png']);
+
+  let unused_images = Array.apply(null, {length: Math.floor(all_images.length / 4)}).map(Function.call, Number);
+
+
   import CountdownTimer from './Timer.vue'
   export default {
-    mounted() {console.log(123)
+    props: ['color'],
+    mounted() {
       this.time()},
     data () {
       return {
@@ -53,7 +158,7 @@
         'Which painting are you the most drawn to?',
         'Which painting is the most inspiring for you?',
         'Which painting do you enjoy the most?'],
-        MAXIMUM_IMAGE: 64,
+        MAXIMUM_IMAGE: all_images.length,
         currentIndex: 0,
         userReady: false,
         timeUp: false,
@@ -67,53 +172,46 @@
     methods: {
 
       time:function() {
-        var self = this
-        this.datenow = this.lastClick-parseInt(Date.now()/1000)+5
+        var self = this;
+        this.datenow = this.lastClick-parseInt(Date.now()/1000)+5;
         setTimeout(self.time, 1000) // recursive!
       },
 
-
       post:function(place){
         if (!(parseInt(Date.now()/1000) > this.lastClick + 5))
-          return
+          return;
+        this.lastClick = parseInt(Date.now()/1000);
 
-        this.lastClick = parseInt(Date.now()/1000)
-        console.log(this.lastClick)
-
-        if (!(this.currentIndex > 60 )) {
           this.$http.post('http://jsonplaceholder.typicode.com/posts',{
-            questionNumber: this.currentIndex / this.places.length,
-            selectedImage: this.currentIndex + place,
+            profile_uid: 1,
+            image_colour: this.color,
+            questionNumber: this.currentIndex,
+            image_uid: all_images[(this.currentIndex + place)],
             question: this.questions[this.currentIndex%5],
             place: place
+
           }).then(function(data){
+
             this.userReady= true;
 
             this.currentIndex += this.places.length;
 
             this.images = [
-              'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 1) + '.jpg',
-              'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 2) + '.jpg',
-              'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 3) + '.jpg',
-              'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 4) + '.jpg']
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 1)],
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 2)],
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 3)],
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 4)]]
           });
-        }
-        else{
-          this.timeUp=true;
-        }
+
       },
       ready(){
-        this.userReady = true
+        this.userReady = true;
         this.images = [
-          'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 1) + '.jpg',
-          'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 2) + '.jpg',
-          'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 3) + '.jpg',
-          'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/0' + (this.currentIndex + 4) + '.jpg']
-      },
-      get(place) {
-        const index = place + this.currentIndex;
-        return 'https://s3.eu-central-1.amazonaws.com/cognitive-images/original/' + (index + 1) + '.jpg';
-      },
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 1)],
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 2)],
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 3)],
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 4)]]
+      }
 
     }
   }
@@ -141,19 +239,6 @@
 </script>
 
 <style scoped>
-
-  #timer_style *{
-    box-sizing: border-box;
-  }
-  #timer_style{
-    margin: 20px auto;
-    max-width: 1200px;
-    alignment: center;
-  }
-
-  #instructions *{
-    box-sizing: border-box;
-  }
   #instructions{
     margin: 20px auto;
     max-width: 500px;
@@ -166,29 +251,13 @@
     max-width: 500px;
   }
 
-  #one-question *{
-    box-sizing: border-box;
-  }
-  #one-question{
+  img{
+    overflow: hidden;
+    max-height: 400px;
     margin: 20px auto;
-    max-width: 1200px;
+
   }
 
-  div.gallery {
-    margin: 5px;
-    border: 1px solid #ccc;
-    float: left;
-    width: 500px;
-  }
-
-  div.gallery:hover {
-    border: 1px solid #777;
-  }
-
-  div.gallery img {
-    width: 100%;
-    height: auto;
-  }
 
   div.desc {
     padding: 15px;

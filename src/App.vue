@@ -13,6 +13,9 @@ import panas from './components/Panas.vue';
 import panasfinal from './components/Panasfinal.vue';
 import header from './components/header.vue';
 import Timer from './components/Timer.vue';
+
+const colors =[ 'red', 'yellow', 'blue'];
+
 export default {
     components: {
         'add-blog': addBlog,
@@ -25,18 +28,25 @@ export default {
     },
     data () {
         return {
-            color:1
+            color: undefined
         }
     },
+    created: function() {
+      if(typeof this.color === 'undefined'){
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+    },
     methods: {
-
     }
 }
 </script>
 
 <style>
 body{
+    line-height: 2;
     margin: 0;
-    font-family: 'Helvetica';
+}
+h1, h2, h3, h4, h5{
+  margin: 30px 0 30px 0;
 }
 </style>
