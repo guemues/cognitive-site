@@ -10,7 +10,7 @@ export default [
   {path:'/show',component: showBlogs},
   {path:'/add', component: newTest},
   {path: '/question', component: question},
-  {path: '/panas', component: panas},
+  {path: '/panas/:is_before', component: panas},
   {path: '/panasfinal', component: panasfinal},
   {path: '/colortest', component:colortest }
 

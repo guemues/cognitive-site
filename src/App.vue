@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-view v-bind:color="color"></router-view>
+      <router-view v-on:change_profile_uid="change_profile_uid($event)" v-bind:profile_uid="profile_uid" v-bind:image_colour="image_colour"></router-view>
     </div>
 </template>
 
@@ -28,15 +28,19 @@ export default {
     },
     data () {
         return {
-            color: undefined
+          profile_uid: 2,
+          image_colour: undefined
         }
     },
     created: function() {
-      if(typeof this.color === 'undefined'){
-        this.color = colors[Math.floor(Math.random() * colors.length)];
+      if(typeof this.image_colour === 'undefined'){
+        this.image_colour = colors[Math.floor(Math.random() * colors.length)];
       }
     },
     methods: {
+      change_profile_uid: function (new_uid) {
+        this.profile_uid = new_uid;
+      }
     }
 }
 </script>
