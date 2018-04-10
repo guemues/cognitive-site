@@ -71,7 +71,6 @@
     '3-11.png',
     '4-44.png',
     '4-48.png',
-    '5-4.png',
     '5-6.png',
     '5-32.png',
     '5-40.png',
@@ -80,15 +79,9 @@
     '11-6.png',
     '14-4.png',
     '14-6.png',
-    '14-7.png',
-    '16-2.png',
-    '16-4.png',
     '17-4.png',
-    '17-7.png',
-    '18-2.png',
     '18-4.png',
     '18-6.png',
-    '18-7.png',
     '19-4.png',
     '21-43.png',
     '21-47.png',
@@ -133,8 +126,7 @@
     '46-45.png',
     '46-48.png',
     '48-21.png',
-    '48-47.png',
-    '49-40.png']);
+    '48-47.png']);
 
   let unused_images = Array.apply(null, {length: Math.floor(all_images.length / 4)}).map(Function.call, Number);
 
