@@ -183,7 +183,7 @@
             place: place
 
           }).then(function(data){
-            if(this.lastClick - this.firstOpen > 10){
+            if(this.lastClick - this.firstOpen > 100){
               this.$router.push({ path: '/panas/FALSE' });
             }
             this.userReady= true;
