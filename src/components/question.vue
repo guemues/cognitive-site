@@ -247,8 +247,8 @@
   img{
     overflow: hidden;
     margin: 20px auto;
-    min-width: 400px;
-    max-width: 600px;
+    width: 80%;
+    height: 400px;
   }
 
 
