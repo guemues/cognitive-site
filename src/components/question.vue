@@ -20,30 +20,26 @@
     </div>
     <div id="one-question" v-if="userReady && !timeUp">
       <h2 class="text-center">{{questions[currentIndex%5]}}</h2>
-
-      <div class="col-lg-6 box">
-        <div class="gallery"  >
+      <div class="row">
+        <div class="col-md-6">
           <a target="_blank" v-on:click="post(0)">
             <img class="img-responsive" :src="images[0]" >
           </a>
         </div>
-      </div>
-      <div class="col-lg-6 box">
-        <div class="gallery"  >
+        <div class="col-md-6">
           <a target="_blank" v-on:click="post(1)">
             <img class="img-responsive" :src="images[1]">
           </a>
         </div>
       </div>
-      <div class="col-lg-6 box">
-        <div class="gallery"  >
+      <div class="row">
+
+        <div class="col-md-6">
           <a target="_blank" v-on:click="post(2)">
             <img class="img-responsive":src="images[2]" >
           </a>
         </div>
-      </div>
-      <div class="col-lg-6 box">
-        <div class="gallery"  >
+        <div class="col-md-6">
           <a target="_blank" v-on:click="post(3)">
             <img class="img-responsive":src="images[3]">
           </a>
@@ -76,7 +72,6 @@
     '3-11.png',
     '4-44.png',
     '4-48.png',
-    '5-4.png',
     '5-6.png',
     '5-32.png',
     '5-40.png',
@@ -85,15 +80,9 @@
     '11-6.png',
     '14-4.png',
     '14-6.png',
-    '14-7.png',
-    '16-2.png',
-    '16-4.png',
     '17-4.png',
-    '17-7.png',
-    '18-2.png',
     '18-4.png',
     '18-6.png',
-    '18-7.png',
     '19-4.png',
     '21-43.png',
     '21-47.png',
@@ -138,15 +127,14 @@
     '46-45.png',
     '46-48.png',
     '48-21.png',
-    '48-47.png',
-    '49-40.png']);
+    '48-47.png']);
 
   let unused_images = Array.apply(null, {length: Math.floor(all_images.length / 4)}).map(Function.call, Number);
 
 
   import CountdownTimer from './Timer.vue'
   export default {
-    props: ['color'],
+    props: ['image_colour', 'profile_uid'],
     mounted() {
       this.time()},
     data () {
@@ -164,10 +152,14 @@
         userReady: false,
         timeUp: false,
         lastClick: parseInt(Date.now()/1000),
+        firstOpen: undefined
       }
     },
     components: {
       CountdownTimer
+    },
+    mounted: function () {
+      this.firstOpen = parseInt(Date.now()/1000)
     },
 
     methods: {
@@ -183,35 +175,36 @@
           return;
         this.lastClick = parseInt(Date.now()/1000);
 
-          this.$http.post('http://jsonplaceholder.typicode.com/posts',{
-            profile_uid: 1,
-            image_colour: this.color,
+          this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/click',{
+            profile_uid: this.profile_uid,
+            image_colour: this.image_colour,
             questionNumber: this.currentIndex,
             image_uid: all_images[(this.currentIndex + place)],
             question: this.questions[this.currentIndex%5],
             place: place
 
           }).then(function(data){
-
+            if(this.lastClick - this.firstOpen > 100){
+              this.$router.push({ path: '/panas/FALSE' });
+            }
             this.userReady= true;
-
             this.currentIndex += this.places.length;
-
             this.images = [
-              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 1)],
-              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 2)],
-              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 3)],
-              'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 4)]]
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 1)],
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 2)],
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 3)],
+              'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 4)]]
           });
+
 
       },
       ready(){
         this.userReady = true;
         this.images = [
-          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 1)],
-          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 2)],
-          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 3)],
-          'https://s3.eu-central-1.amazonaws.com/cognitive.images/blue/' + all_images[(this.currentIndex + 4)]]
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 1)],
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 2)],
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 3)],
+          'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 4)]]
       }
 
     }
@@ -254,9 +247,9 @@
 
   img{
     overflow: hidden;
-    max-height: 400px;
     margin: 20px auto;
-
+    width: 80%;
+    height: 400px;
   }
 
 

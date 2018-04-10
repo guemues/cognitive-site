@@ -138,6 +138,8 @@
   // Imports
 
   export default {
+    props: ['image_colour'],
+
     data() {
       return {
         participant: {
@@ -440,6 +442,7 @@
     methods: {
       post: function () {
         this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/profile', {
+          image_colour: this.image_colour,
           country: this.participant.origin,
           age: this.participant.age,
           gender: this.participant.gender,
@@ -450,7 +453,8 @@
           art_level: this.participant.art_level,
           blindness: this.participant.blindness,
         }).then(function (data) {
-          this.$router.push({ path: '/panas' });
+          this.$emit('change_profile_uid', data.data.Profile.uid);
+          this.$router.push({ path: '/panas/TRUE' });
           this.submitted = true;
         });
 
