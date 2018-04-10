@@ -7,7 +7,7 @@
         Please verify the color accuracy of your screen according by selecting the most accurate object that matches the presented color.
       </p>
       <div class="grid-container">
-        <div v-bind:style="{background: color}">
+        <div v-bind:style="{background: image_colour}">
         </div>
       </div>
       <div class="grid-container">
@@ -16,7 +16,7 @@
             select the color
           </p>
           <select v-model="selected_color_1">
-            <option v-for="selectcolor in color1blue">{{ selectcolor }}</option>
+            <option v-for="selectcolor in color_selected">{{ selectcolor }}</option>
           </select>
         </div>
       </div>
@@ -33,21 +33,23 @@
 
 <script>
   export default {
-    props:['color'],
+    props:['image_colour', 'profile_uid'],
     data() {
       return {
         selected_color_1: '',
         selected_color_2: '',
-        color1blue: ['banana', 'gold', 'lemon', 'pumpking', 'carrot', 'honey','ginger','caramel','cherry','rose','bordeau'
+        color_selected: ['banana', 'gold', 'lemon', 'pumpking', 'carrot', 'honey','ginger','caramel','cherry','rose','bordeau'
           ,'wine','lime','pear','mint','crocodile','shadow','grey','iron','cloud','ash'],
         submitted: false
       }
     },
     methods: {
       post: function () {
-        this.$http.post('http://jsonplaceholder.typicode.com/posts',{
-          color1: this.color1blue,
-          selected_color: this.color
+        this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/click',{
+          selected_color: this.color_selected,
+          image_colour: this.image_colour,
+          profile_uid: this.profile_uid
+
 
         }).then(function(data){
           console.log(data);

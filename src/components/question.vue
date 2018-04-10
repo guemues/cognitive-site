@@ -4,8 +4,8 @@
     <div id="instructions" v-if="!userReady">
       <h1>Instructions for art evaluation</h1>
       <p>Thank you for taking part in our survey. The session will take place as follows:</p>
-      <p>At each step, four art pieces will be presented on the screen. After 5 seconds,
-        a question about those paintings will appear. It will invite you to choose one of
+      <p>At each step, four art pieces will be presented on the screen with a corresponding question. After 5 seconds,
+        you will be able to choose one of
         the images. Select your answer by clicking on the picture you want to choose. It will
         immediately move to the next question.
       </p>
