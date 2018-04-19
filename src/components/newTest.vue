@@ -37,7 +37,6 @@
           </select>
         </div>
       </div>
-      <!--,TODO: add the langagues-->
 
 
       <div class="row">
@@ -101,7 +100,7 @@
 
       <div class="row">
         <div class="form-group">
-          <label for="color">Do you have troubles seeing differences between some colors?</label>
+          <label for="color">Do you have troubles seeing differences between some colors? (colorblindness)</label>
           <select class="form-control" id="color" v-model="participant.blindness">
             <option v-for="blindness in blindnesses">{{ blindness }}</option>
           </select>
@@ -110,7 +109,7 @@
 
       <div id="separation"></div>
       <div class="row">
-
+  <!-- TODO: picture sizes, yellow fix, achromatic  -->
       <button class="btn btn-default" :disabled="!(participant.residence != ''
           && participant.fluency != '' && participant.idiom != '' && participant.origin != '' &&
           participant.age!='' && participant.gender!='' && participant.degree_level!='' &&

@@ -13,7 +13,8 @@
         Please, take the time you need to look at all pictures before answering each question.
         The whole experiment will last approximately 10 minutes.
         Please try to answer the whole questions in one sitting.
-        Also you are invited to remove all screen color filters and to increase the brightness of your screen.
+        Also you are invited to remove all screen color filters, to increase the brightness of your screen and
+        put your browser in fullscreen.
       </p>
       <p>When ready click the next button</p>
       <button class="btn btn-default" v-on:click.prevent="ready">Next</button>
