@@ -14,7 +14,7 @@ import panasfinal from './components/Panasfinal.vue';
 import header from './components/header.vue';
 import Timer from './components/Timer.vue';
 
-const colors =[ 'red', 'yellow', 'blue'];
+const colors =[ 'red', 'yellow', 'blue', 'w'];
 
 export default {
     components: {
