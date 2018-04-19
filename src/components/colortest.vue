@@ -121,7 +121,7 @@
           this.display_color_2='#FFFF0F';
           console.log("it is yellow");
         }
-        if (this.image_colour=="grey")
+        if (this.image_colour=="w")
         {
           this.display_color_1="#aaaaaa";
           this.display_color_2="#777777";
