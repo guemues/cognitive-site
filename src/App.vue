@@ -9,8 +9,7 @@
 import addBlog from './components/newTest.vue';
 import showBlogs from './components/showBlogs.vue';
 import question from './components/question.vue';
-import panas from './components/Panas.vue';
-import panasfinal from './components/Panasfinal.vue';
+import panas from './components/panas.vue';
 import header from './components/header.vue';
 import Timer from './components/Timer.vue';
 
@@ -22,13 +21,12 @@ export default {
         'show-blogs': showBlogs,
         'question' : question,
         'panas' : panas,
-        'panasfinal': panasfinal,
         'app-header': header,
         'Timer' : Timer
     },
     data () {
         return {
-          profile_uid: 2,
+          profile_uid: -1, // Test user uid
           image_colour: undefined
         }
     },

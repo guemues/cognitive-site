@@ -89,7 +89,7 @@
     },
     methods: {
       post: function () {
-        this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/click',{
+        this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/perception',{
           selected_color_1: this.selected_color_1,
           selected_color_2: this.selected_color_2,
           image_colour: this.image_colour,

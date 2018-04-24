@@ -68,7 +68,7 @@
     return a;
   }
 
-  const all_images = shuffle(['3-5.jpg',
+  let all_images = shuffle(['3-5.jpg',
     '3-6.jpg',
     '3-11.jpg',
     '4-44.jpg',
@@ -130,9 +130,6 @@
     '48-21.jpg',
     '48-47.jpg']);
 
-  let unused_images = Array.apply(null, {length: Math.floor(all_images.length / 4)}).map(Function.call, Number);
-
-
   import CountdownTimer from './Timer.vue'
   export default {
     props: ['image_colour', 'profile_uid'],
@@ -188,6 +185,11 @@
             if(this.lastClick - this.firstOpen > 60 * 60){
               this.$router.push({ path: '/panas/FALSE' });
             }
+
+            if(this.currentIndex + this.places.length + 1 >= all_images.length){
+              all_images = shuffle(all_images);
+              this.currentIndex = 0;
+            }
             this.userReady= true;
             this.currentIndex += this.places.length;
             this.images = [
@@ -195,6 +197,8 @@
               'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 2)],
               'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 3)],
               'https://s3.eu-central-1.amazonaws.com/cognitive.images/' + this.image_colour + '/' + all_images[(this.currentIndex + 4)]]
+          }).catch(err => {
+            console.log(err)
           });
 
 
