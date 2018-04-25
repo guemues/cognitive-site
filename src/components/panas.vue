@@ -1,5 +1,11 @@
 <template>
   <div id="panas">
+    <div>
+      <img class="logo pull-right" src="../assets/unil.png"/>
+      <img class="logo pull-left" src="../assets/epfl.png"/>
+    </div>
+    <br>
+
     <div id="selection" v-if="!submitted">
       <h1>How are you feeling right now?</h1>
       <p v-if="$route.params.is_before !== 'TRUE'">You have finished the Art evaluation part. Now please answer the questions below.</p>
@@ -179,6 +185,14 @@
           && panas_scale.inspired != '' && panas_scale.nervous != '' && panas_scale.determined != ''
           && panas_scale.attentive != '' && panas_scale.jittery != '' && panas_scale.active != ''
           && panas_scale.afraid != '' && typeof profile_uid !== 'undefined' )" v-on:click="post">Submit</button>
+      <span v-if="!(panas_scale.interested != ''
+          && panas_scale.distressed != '' && panas_scale.excited != '' && panas_scale.upset != '' &&
+          panas_scale.strong!='' && panas_scale.guilty!='' && panas_scale.scared!='' &&
+          panas_scale.hostile!='' && panas_scale.enthusiastic!='' && panas_scale.proud != ''
+          && panas_scale.irritable != '' && panas_scale.alert != '' && panas_scale.ashamed != ''
+          && panas_scale.inspired != '' && panas_scale.nervous != '' && panas_scale.determined != ''
+          && panas_scale.attentive != '' && panas_scale.jittery != '' && panas_scale.active != ''
+          && panas_scale.afraid != '' && typeof profile_uid !== 'undefined' )">You should complete all the questions before submitting the form.</span>
     </div>
   </div>
 </template>

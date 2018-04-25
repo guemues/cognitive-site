@@ -1,15 +1,26 @@
 <template>
   <div id="add-participant">
+    <div>
+      <img class="logo pull-right" src="../assets/unil.png"/>
+      <img class="logo pull-left" src="../assets/epfl.png"/>
+    </div>
+    <br>
+    <div id="results" v-if="is_end === 'TRUE'">
+      <h1>Thank You</h1>
+      <p>Thank you for taking part in our experiment! We hope you enjoyed it.
+        If you have any questions regarding this survey, don’t hesitate to contact us: orcun.gumus at epfl.ch, nicolas.rossignol at epfl.ch, farzaneh.habibollahi at epfl.ch, jean.bejjani at epfl.ch, asli.sahin at epfl.ch . You can find more information about color research on <a href="https://www.colourexperience.ch/">https://www.colourexperience.ch/</a>
+      </p>
+    </div>
 
     <h1>Artistic Feedback Survey</h1>
     <form v-if="!submitted && !agreed">
-      <p>We are a group of EPFL students in collaboration with UNIL CARLA LAB.
+      <p>We are a group of EPFL students in collaboration with UNIL CARLA LAB (Domicele Jonauskaite, Corentin Wicht, and Prof Chrstine Mohr).
         Welcome to our study "Helping young artists choose their best art pieces".</p>
       <p>In this online study, we want to gather data about abstract paintings.
         The questions of this survey are to assess which of the art pieces are most appreciated by the public.
         It will also provide us information about the perception of art.
         Your answers to these questions will be used anonymously and for research and academic purposes only.
-        All the gathered data will be confidential.
+        All the gathered data will be confidential. Please do not use mobile devices to complete this survey.
       </p>
       <p>If you agree to take part in this experiment, please click next.</p>
       <div>
@@ -100,7 +111,7 @@
 
       <div class="row">
         <div class="form-group">
-          <label for="color">Do you have troubles seeing differences between some colors? (colorblindness)</label>
+          <label for="color">Do you have troubles seeing differences between some colors? (color blindness)</label>
           <select class="form-control" id="color" v-model="participant.blindness">
             <option v-for="blindness in blindnesses">{{ blindness }}</option>
           </select>
@@ -115,6 +126,11 @@
           participant.age!='' && participant.gender!='' && participant.degree_level!='' &&
           participant.art_level!='' && participant.blindness!='' )" v-on:click.prevent="post">Submit
       </button>
+        <span v-if="!(participant.residence != ''
+          && participant.fluency != '' && participant.idiom != '' && participant.origin != '' &&
+          participant.age!='' && participant.gender!='' && participant.degree_level!='' &&
+          participant.art_level!='' && participant.blindness!='')">You should complete all the questions before submitting the form.</span>
+
       </div>
     </form>
     <div class="hide" id="preview" v-if="agreed">
@@ -434,11 +450,24 @@
         art_levels: ['novice', 'amateur', 'connoisseur'],
         blindnesses: ['No', 'Yes'],
         submitted: false,
-        agreed: false
+        agreed: false,
+        is_end: 'FALSE'
 
       }
     },
+    mounted: function () {
+      if(this.$route.params.is_end === 'TRUE'){
+        this.is_end = 'TRUE'
+      }
+    },
     methods: {
+
+      is_ready: function () {
+        return !(this.participant.residence != ''
+          && this.participant.fluency != '' && this.participant.idiom != '' && this.participant.origin != '' &&
+          this.participant.age!='' && this.participant.gender!='' && participant.degree_level!='' &&
+          this.participant.art_level!='' && this.participant.blindness!='');
+      },
       post: function () {
         this.$http.post('https://pwsdjzqgyf.execute-api.eu-central-1.amazonaws.com/dev/profile', {
           image_colour: this.image_colour,
@@ -465,11 +494,6 @@
 <style>
   #add-participant * {
     box-sizing: border-box;
-  }
-
-  #add-participant {
-    margin: 20px auto;
-    max-width: 600px;
   }
 
   input[type="text"], textarea {

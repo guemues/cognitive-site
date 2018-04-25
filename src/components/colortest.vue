@@ -1,10 +1,16 @@
 <template>
   <div id="colortest">
+    <div>
+      <img class="logo pull-right" src="../assets/unil.png"/>
+      <img class="logo pull-left" src="../assets/epfl.png"/>
+    </div>
+    <br>
+
     <div id="selection" v-if="!submitted">
       <h1>Color perception test</h1>
       <p>Thank you for taking part in our survey. </p>
       <p>
-        Please verify the color accuracy of your screen according by selecting the most accurate object that matches the presented color.
+        Please verify the color accuracy of your screen according by selecting the most accurate object that matches the presented color. The same color name can be used twice.
       </p>
       <div class="grid-container">
         <div v-bind:style="{background: display_color_1}">
@@ -31,12 +37,6 @@
         </div>
       </div>
       <button :disabled="(selected_color_1=='' || selected_color_2=='')" v-on:click.prevent="post">Submit</button>
-    </div>
-    <div id="results" v-if="submitted">
-      <h1>Thank You</h1>
-      <p>Thank you for taking part in our experiment! We hope you enjoyed it.
-        If you have any questions regarding this survey, don’t hesitate to contact us: wearecool@shs.ch
-      </p>
     </div>
   </div>
 </template>
@@ -98,7 +98,8 @@
 
         }).then(function(data){
           console.log(data);
-          this.submitted= true;
+          this.$router.push({ path: '/final' });
+
         });
       },
       find_color: function () {
@@ -146,11 +147,6 @@
   #colortest *{
     box-sizing: border-box;
   }
-  #colortest{
-    margin: 20px auto;
-    max-width: 500px;
-  }
-
 
   .grid-item{
     margin-left: 50px;

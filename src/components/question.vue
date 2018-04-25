@@ -1,19 +1,18 @@
 <template>
   <div id="questions">
-    <h2 id="timer_style" v-if="userReady && !timeUp"></h2>
     <div id="instructions" v-if="!userReady">
       <h1>Instructions for art evaluation</h1>
       <p>Thank you for taking part in our survey. The session will take place as follows:</p>
-      <p>At each step, four art pieces will be presented on the screen with a corresponding question. After 5 seconds,
+      <p>At each step, four art pieces will be presented on the screen with a corresponding question. <b>After 5 seconds,
         you will be able to choose one of
-        the images. Select your answer by clicking on the picture you want to choose. It will
+        the images.</b> Select your answer by clicking on the picture you want to choose. It will
         immediately move to the next question.
       </p>
       <p>
         Please, take the time you need to look at all pictures before answering each question.
         The whole experiment will last approximately 10 minutes.
         Please try to answer the whole questions in one sitting.
-        Also you are invited to remove all screen color filters, to increase the brightness of your screen and
+        Also we strongly advise you to remove all screen color filters, to increase the brightness of your screen and
         put your browser in fullscreen.
       </p>
       <p>When ready click the next button</p>
@@ -21,30 +20,26 @@
     </div>
     <div id="one-question" v-if="userReady && !timeUp">
       <h2 class="text-center">{{questions[currentIndex%5]}}</h2>
-      <div class="row">
         <div class="col-md-6">
           <a target="_blank" v-on:click="post(0)">
-            <img class="img-responsive" :src="images[0]" >
+            <img class="imgLeft imgTop" :src="images[0]" >
           </a>
         </div>
         <div class="col-md-6">
           <a target="_blank" v-on:click="post(1)">
-            <img class="img-responsive" :src="images[1]">
+            <img class="imgRight imgTop"  :src="images[1]">
           </a>
-        </div>
       </div>
-      <div class="row">
 
         <div class="col-md-6">
           <a target="_blank" v-on:click="post(2)">
-            <img class="img-responsive":src="images[2]" >
+            <img class="imgLeft imgBottom"  :src="images[2]" >
           </a>
         </div>
         <div class="col-md-6">
           <a target="_blank" v-on:click="post(3)">
-            <img class="img-responsive":src="images[3]">
+            <img class="imgRight imgBottom"  :src="images[3]">
           </a>
-        </div>
       </div>
     </div>
     <div id="endQuestions" v-if="userReady && timeUp">
@@ -130,7 +125,6 @@
     '48-21.jpg',
     '48-47.jpg']);
 
-  import CountdownTimer from './Timer.vue'
   export default {
     props: ['image_colour', 'profile_uid'],
     mounted() {
@@ -152,9 +146,6 @@
         lastClick: parseInt(Date.now()/1000),
         firstOpen: undefined
       }
-    },
-    components: {
-      CountdownTimer
     },
     mounted: function () {
       this.firstOpen = parseInt(Date.now()/1000)
@@ -239,23 +230,33 @@
 </script>
 
 <style scoped>
-  #instructions{
-    margin: 20px auto;
-    max-width: 500px;
-  }
+
   #endQuestions *{
     box-sizing: border-box;
   }
-  #endQuestions{
-    margin: 20px auto;
-    max-width: 500px;
-  }
 
   img{
-    overflow: hidden;
-    margin: 20px auto;
-    width: 80%;
-    height: 400px;
+    /*overflow: hidden;*/
+    position: fixed;
+    width: 38vw;
+    height: 42vh;
+
+    /*max-height: 400px;*/
+    /*max-width: 700px;*/
+    /*height: 400px;*/
+  }
+
+  .imgLeft{
+    left: 8vw;
+  }
+  .imgRight{
+    right: 8vw;
+  }
+  .imgTop{
+    top: 10vh;
+  }
+  .imgBottom{
+    bottom: 2vw
   }
 
 
