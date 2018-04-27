@@ -14,7 +14,7 @@
 
     <h1>Artistic Feedback Survey</h1>
     <form v-if="!submitted && !agreed">
-      <p>We are a group of EPFL students in collaboration with UNIL CARLA LAB (Domicele Jonauskaite, Corentin Wicht, and Prof Chrstine Mohr).
+      <p>We are a group of EPFL students in collaboration with UNIL CARLA LAB (Domicele Jonauskaite, Corentin Wicht, and Prof Christine Mohr).
         Welcome to our study "Helping young artists choose their best art pieces".</p>
       <p>In this online study, we want to gather data about abstract paintings.
         The questions of this survey are to assess which of the art pieces are most appreciated by the public.
