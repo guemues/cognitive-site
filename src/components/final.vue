@@ -1,4 +1,5 @@
 <template>
+  <div>
   <p id="add-participant">
     <div>
       <img class="logo pull-right" src="../assets/unil.png"/>
@@ -21,6 +22,7 @@
   If you are seduced by this field of research and would like to know more about it, please follow this link :
   <a href="https://www.colourexperience.ch/">https://www.colourexperience.ch/</a>
       </p>
+  </div>
   </div>
 </template>
 
